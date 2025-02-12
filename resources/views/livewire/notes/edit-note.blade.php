@@ -44,6 +44,8 @@ new #[Layout('layouts.app')] class extends Component {
             'is_published' => $this->noteIsPublished,
         ]);
 
+        $this->dispatch('note-saved');
+
     }
 
 }; ?>
@@ -68,10 +70,12 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <x-checkbox label="Note Published" wire:model="noteIsPublished" />
 
-                <div class="pt-4">
-                    <x-button primary right-icon="calendar" spinner type="submit"> Save Note</x-button>
-                    <x-button></x-button>
+                <div class="pt-4 flex justify-between">
+                    <x-button secondary spinner="saveNote" type="submit"> Save Note</x-button>
+                    <x-button href="{{route('notes.index')}}" flat negative >Back to Notes</x-button>
                 </div>
+
+                <x-action-message on="note-saved" />
 
                 <x-errors />
 

@@ -13,7 +13,8 @@
 - Users cant view other peoples notes
 - Notes Should only be public 
 - Notes should be as secured as possible for public-facing notes.
-    - Use UUIDs 
+    - Use UUIDs
+- Notes only people who have access
 
 ## what are things we are learning ? 
 
@@ -165,3 +166,32 @@ then do
  > php artisan migrate:rollback
  
 now recipient column add to the notes table .. 
+
+
+# next we can do is 
+
+only auth users can only delete posts 
+that's why we are going to policy
+
+>  php artisan make:policy NotePolicy --model=Note
+
+then first go to show-notes page 
+
+$this->authorize('delete',$note);  #add this line before delete 
+
+then go to policy , write like this
+
+public function delete(User $user, Note $note): bool
+    {
+        return $user->id === $note->user_id;
+    }
+
+Now that authenticated user only can delete that note.. 
+
+then we are going to create edit page
+>  php artisan make:volt notes/edit-note --class
+
+then create the route for this 
+
+
+we can also do Policy for edit too.. 
